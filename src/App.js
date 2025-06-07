@@ -5,6 +5,7 @@ import Dashboard from './components/Dashboard';
 import ManageProduct from './components/ManageProduct';
 import OrderManagement from './components/OrderManagement';
 import EnquiryManagement from './components/EnquiryManagement';
+import Appointments from './components/Appointments';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Route path="manage-product" element={<ManageProduct />} />
           <Route path="orders" element={<OrderManagement />} />
           <Route path="enquiry" element={<EnquiryManagement />} />
+          <Route path="appointments" element={<Appointments />} />
           <Route index element={<Navigate to="manage-product" replace />} />
         </Route>
         <Route path="/" element={<Navigate to="/login" replace />} />

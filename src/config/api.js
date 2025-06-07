@@ -17,6 +17,9 @@ export const PRODUCT_ADD_URL = `${PRODUCT_URL}/add`;
 export const PRODUCT_UPDATE_URL = (id) => `${PRODUCT_URL}/update/${id}`;
 export const PRODUCT_DELETE_URL = (id) => `${PRODUCT_URL}/delete/${id}`;
 
+//Appointment API endpoint
+export const APPOINTMENTS_URL = `${BASE_URL}/appointments`; // For appointment operations
+
 export default {
   API_URL,
   AUTH_URL,
