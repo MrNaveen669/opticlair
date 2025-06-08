@@ -10,8 +10,8 @@
 
 ## 🚀 Live Demo
 
-🌐 **Frontend**: [https://opticlair-client.onrender.com](https://opticlair.in)  
-🛠️ **Admin Panel**: [https://opticlair-admin.onrender.com](https://opticlair-admin.onrender.com)
+🌐 **Frontend**: [https://opticlair.in](https://opticlair.in)  
+🛠️ **Admin Panel**: [https://Admin_Opticlair.in](https://opticlair-admin.onrender.com)
 
 ![Opticlair Preview](https://your-image-or-gif-link.com/demo.gif)
 
