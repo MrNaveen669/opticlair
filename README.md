@@ -10,7 +10,7 @@
 
 ## 🚀 Live Demo
 
-🌐 **Frontend**: [https://opticlair-client.onrender.com](https://opticlair-client.onrender.com)  
+🌐 **Frontend**: [https://opticlair-client.onrender.com](https://opticlair.in)  
 🛠️ **Admin Panel**: [https://opticlair-admin.onrender.com](https://opticlair-admin.onrender.com)
 
 ![Opticlair Preview](https://your-image-or-gif-link.com/demo.gif)
@@ -52,7 +52,7 @@
 
 ```bash
 git clone https://github.com/yourusername/opticlair.git
-cd opticlair ```
+cd opticlair 
 
 Install Dependencies
 bash
@@ -68,4 +68,5 @@ npm install
 
 # Install backend
 cd ../server
-npm install
+npm install ```.
+
