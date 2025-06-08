@@ -1,10 +1,10 @@
 # 👓 Opticlair – Optical E-Commerce Store 🛒  
 *A sleek and modern Lenskart clone built with MERN Stack.*
 
-[![License](https://img.shields.io/github/license/yourusername/opticlair)](LICENSE)
-![GitHub last commit](https://img.shields.io/github/last-commit/yourusername/opticlair)
-![GitHub top language](https://img.shields.io/github/languages/top/yourusername/opticlair)
-![Stars](https://img.shields.io/github/stars/yourusername/opticlair?style=social)
+[![License](https://img.shields.io/github/license/MrNaveen669/opticlair)](LICENSE)
+![GitHub last commit](https://img.shields.io/github/last-commit/MrNaveen669/opticlair)
+![GitHub top language](https://img.shields.io/github/languages/top/MrNaveen669/opticlair)
+![Stars](https://img.shields.io/github/stars/MrNaveen669/opticlair?style=social)
 
 ---
 
