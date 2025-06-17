@@ -111,14 +111,51 @@ function Dashboard() {
                   color: window.location.pathname.includes('orders') ? '#ff6347' : '#888'
                 }}
               >
-                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                <polyline points="14 2 14 8 20 8"></polyline>
-                <line x1="16" y1="13" x2="8" y2="13"></line>
-                <line x1="16" y1="17" x2="8" y2="17"></line>
-                <polyline points="10 9 9 9 8 9"></polyline>
+                <circle cx="9" cy="21" r="1"></circle>
+                <circle cx="20" cy="21" r="1"></circle>
+                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
               </svg>
-              Order Management
+              Orders
             </Link>
+          </div>
+
+          {/* New Prescriptions Section */}
+          {/* <div style={{ marginBottom: '20px' }}>
+            <Link
+              to="/dashboard/orders?filter=prescriptions"
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                padding: '10px',
+                textDecoration: 'none',
+                color: '#333',
+                backgroundColor: window.location.pathname.includes('prescriptions') ? '#fff3f0' : 'transparent',
+                borderRadius: '8px'
+              }}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                style={{
+                  marginRight: '10px',
+                  color: window.location.pathname.includes('prescriptions') ? '#ff6347' : '#888'
+                }}
+              >
+                <path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2V9M9 21H5a2 2 0 0 1-2-2V9m0 0h18"/>
+                <path d="M12 12h3m3 0h-3m0 0V9m0 3v3"/>
+              </svg>
+              Prescriptions
+            </Link>
+          </div> */}
+
+          <div style={{ marginBottom: '20px' }}>
             <Link
               to="/dashboard/enquiry"
               style={{
@@ -189,6 +226,44 @@ function Dashboard() {
               Appointments
             </Link>
           </div>
+          <div style={{ marginBottom: '20px' }}>
+            <Link
+              to="/dashboard/prescriptions"
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                padding: '10px',
+                textDecoration: 'none',
+                color: '#333',
+                backgroundColor: window.location.pathname.includes('prescriptions') ? '#fff3f0' : 'transparent',
+                borderRadius: '8px'
+              }}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                style={{
+                  marginRight: '10px',
+                  color: window.location.pathname.includes('prescriptions') ? '#ff6347' : '#888'
+                }}
+              >
+                <circle cx="6" cy="15" r="4"></circle>
+                <circle cx="18" cy="15" r="4"></circle>
+                <path d="M6 15c1.5-2 10.5-2 12 0"></path>
+                <path d="M2 12l2-2h2"></path>
+                <path d="M22 12l-2-2h-2"></path>
+              </svg>
+              Prescription Detail
+            </Link>
+          </div>
+
         </nav>
       </div>
 
@@ -200,24 +275,6 @@ function Dashboard() {
         overflowY: 'auto',
         position: 'relative'
       }}>
-        {/* Logout Button */}
-        {/* <button 
-          onClick={handleLogout}
-          style={{
-            position: 'absolute',
-            top: '10px',
-            right: '20px',
-            padding: '8px 16px',
-            backgroundColor: '#ff6347',
-            color: 'white',
-            border: 'none',
-            borderRadius: '8px',
-            cursor: 'pointer',
-            fontWeight: 'bold'
-          }}
-        >
-          Logout
-        </button> */}
 
         <Outlet />
       </div>

@@ -90,8 +90,8 @@ export default function Appointments() {
                 </th>
                 <th>
                   <span className="header-with-icon">
-                    <span className="icon">📧</span>
-                    Email
+                    <span className="icon">📞</span>
+                    Phone
                   </span>
                 </th>
                 <th>
@@ -112,7 +112,7 @@ export default function Appointments() {
               {filteredAppointments.map((appt) => (
                 <tr key={appt._id}>
                   <td>{appt.name}</td>
-                  <td>{appt.email}</td>
+                  <td>{appt.phone}</td>
                   <td>{appt.date}</td>
                   <td>{appt.time}</td>
                 </tr>

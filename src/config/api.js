@@ -10,6 +10,10 @@ export const API_URL = BASE_URL;
 export const ORDER_MANAGEMENT_URL = `${BASE_URL}/admin/orders`;  // This should work with backend route
 export const ORDER_STATUS_UPDATE_URL = (id) => `${BASE_URL}/admin/orders/${id}/status`;  // Fixed path
 
+// Prescription API endpoints
+export const PRESCRIPTIONS_URL = `${BASE_URL}/prescriptions`;
+export const PRESCRIPTION_STATUS_URL = (id) => `${PRESCRIPTIONS_URL}/${id}/status`;
+
 // Product API endpoints
 export const PRODUCT_URL = `${BASE_URL}/sampleproduct`;
 export const PRODUCT_ALL_URL = `${PRODUCT_URL}/all`;
@@ -26,6 +30,8 @@ export default {
   ADMIN_LOGIN_URL,
   ORDER_MANAGEMENT_URL,
   ORDER_STATUS_UPDATE_URL,
+  PRESCRIPTIONS_URL,
+  PRESCRIPTION_STATUS_URL,
   PRODUCT_URL,
   PRODUCT_ALL_URL,
   PRODUCT_ADD_URL,
