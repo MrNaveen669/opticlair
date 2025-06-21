@@ -49,7 +49,7 @@ function ManageProduct() {
         "Computer Glasses": ["Blu 0 Computer Glasses", "Premium Range", "Gaming Glasses"],
         "Sunglasses": ["Aviator", "Wayfarer", "Round", "Sports"],
         "Eye Glasses": ["Full Frame", "Half Rim", "Rimless", "Premium"],
-        "Contact Lenses": ["Bausch & Lomb", "Johnson & Johnson", "Purevision", "Alcon","Soflens", "Acuvue", "Freshlook", "Optix", "Focus", "Iconnect", "Dailies"],
+        "Contact Lenses": ["Bausch & Lomb", "Johnson & Johnson", "Aqualens", "Aemess", "Acuvue", "Alcon", "Celebration", "Dailies", "Freshlook", "Focus", "Iconnect","Optix", "Polylite ", "Purevision", "Soflens"  ],
         "Reading Glasses": ["Basic", "Premium", "Foldable"]
     };
 
@@ -58,24 +58,31 @@ function ManageProduct() {
         "[-] SPH Power (CYL <0.5)",
         "[+] SPH Power (CYL <0.5)",
         "0.00 (Zero Power)",
-        "-1.00 to -3.00",
-        "-3.25 to -6.00",
-        "+1.00 to +3.00",
-        "+3.25 to +6.00"
+        "-0.50.00 SPH to -6.00 SPH",
+        "-6.00 SPH to -9.00 SPH",
+        "-0.50 SPH to -12.00 SPH",
+        "+0.50 SPH to +6.00 SPH",
+        "-9.00 SPH to -20.00 SPH",
+        "-0.75 CYL to -2.25 CYL",
+        "-0.75 CYL to -2.75 CYL",
+        "-0.75 CYL to -6.00 CYL"    
     ];
 
     const contactLensColorOptions = [
         "Clear/Transparent",
         "Aquacolor Premium",
-        "Color with no Power",
-        "Color with no CYL Power",      
         "Aquacolor",
+        "Brown",
+        "Color with no Power",
+        "Color with no CYL Power", 
+        "Green",
+        "Gray",     
         "Honey",
         "Hazel",
-        "Green",
-        "Blue",
-        "Gray",
-        "Brown"
+        "Sea Blue",
+        "Pure Hazel",
+        "Turquoise",
+        "Violet",
     ];
 
     useEffect(() => {
