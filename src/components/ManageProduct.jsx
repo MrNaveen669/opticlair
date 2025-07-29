@@ -9,8 +9,12 @@ import {
     PRODUCT_DELETE_URL
   } from "../config/api";
   
+
+
 function ManageProduct() {
     const [products, setProducts] = useState([]);
+    const [filteredProducts, setFilteredProducts] = useState([]);
+    const [searchTerm, setSearchTerm] = useState("");
     const [editingProduct, setEditingProduct] = useState(null);
     const [showScrollTop, setShowScrollTop] = useState(false);
     const [newProduct, setNewProduct] = useState({
@@ -27,6 +31,7 @@ function ManageProduct() {
         stock: "Available",
         frameMaterial: "",
         lensMaterial: "",
+        frameBrand: "",
         features: "",
         discount: "0",
         // Contact Lens specific fields
@@ -49,7 +54,7 @@ function ManageProduct() {
         "Computer Glasses": ["Blu 0 Computer Glasses", "Premium Range", "Gaming Glasses"],
         "Sunglasses": ["Aviator", "Wayfarer", "Round", "Sports"],
         "Eye Glasses": ["Full Frame", "Half Rim", "Rimless", "Premium"],
-        "Contact Lenses": ["Bausch & Lomb", "Johnson & Johnson", "Aqualens", "Aemess", "Acuvue", "Alcon", "Celebration", "Dailies", "Freshlook", "Focus", "Iconnect","Optix", "Polylite ", "Purevision", "Soflens"  ],
+        "Contact Lenses": ["Aqualens", "Bausch & Lomb", "Johnson & Johnson", "CooperVision", "Alcon"],
         "Reading Glasses": ["Basic", "Premium", "Foldable"]
     };
 
@@ -58,31 +63,22 @@ function ManageProduct() {
         "[-] SPH Power (CYL <0.5)",
         "[+] SPH Power (CYL <0.5)",
         "0.00 (Zero Power)",
-        "-0.50.00 SPH to -6.00 SPH",
-        "-6.00 SPH to -9.00 SPH",
-        "-0.50 SPH to -12.00 SPH",
-        "+0.50 SPH to +6.00 SPH",
-        "-9.00 SPH to -20.00 SPH",
-        "-0.75 CYL to -2.25 CYL",
-        "-0.75 CYL to -2.75 CYL",
-        "-0.75 CYL to -6.00 CYL"    
+        "-1.00 to -3.00",
+        "-3.25 to -6.00",
+        "+1.00 to +3.00",
+        "+3.25 to +6.00"
     ];
 
     const contactLensColorOptions = [
         "Clear/Transparent",
         "Aquacolor Premium",
         "Aquacolor",
-        "Brown",
-        "Color with no Power",
-        "Color with no CYL Power", 
-        "Green",
-        "Gray",     
         "Honey",
         "Hazel",
-        "Sea Blue",
-        "Pure Hazel",
-        "Turquoise",
-        "Violet",
+        "Green",
+        "Blue",
+        "Gray",
+        "Brown"
     ];
 
     useEffect(() => {
@@ -98,6 +94,25 @@ function ManageProduct() {
         // Cleanup
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
+
+    // Filter products based on search term
+    useEffect(() => {
+        if (!searchTerm.trim()) {
+            setFilteredProducts(products);
+        } else {
+            const filtered = products.filter(product => {
+                const searchLower = searchTerm.toLowerCase();
+                return (
+                    product.name?.toLowerCase().includes(searchLower) ||
+                    product.brand?.toLowerCase().includes(searchLower) ||
+                    product.category?.toLowerCase().includes(searchLower) ||
+                    product.gender?.toLowerCase().includes(searchLower) ||
+                    product.frameBrand?.toLowerCase().includes(searchLower)
+                );
+            });
+            setFilteredProducts(filtered);
+        }
+    }, [products, searchTerm]);
 
     const fetchProducts = async () => {
         try {
@@ -190,6 +205,7 @@ function ManageProduct() {
             stock: "Available",
             frameMaterial: "",
             lensMaterial: "",
+            frameBrand: "",
             features: "",
             discount: "0",
             brand: "",
@@ -208,7 +224,8 @@ function ManageProduct() {
                 brand: "",
                 power: "",
                 color: "",
-                gender: ""
+                gender: "",
+                frameBrand: ""
             });
         } else {
             setNewProduct({
@@ -218,9 +235,15 @@ function ManageProduct() {
                 brand: "",
                 power: "",
                 color: "",
-                gender: ""
+                gender: "",
+                frameBrand: ""
             });
         }
+    };
+
+    // Clear search function
+    const clearSearch = () => {
+        setSearchTerm("");
     };
 
     // Helper function to get current category safely
@@ -394,22 +417,32 @@ function ManageProduct() {
                         : setNewProduct({ ...newProduct, sizes: e.target.value })} 
                 />
                 
-                {/* Frame and Lens Material - only show for non-Contact Lens categories */}
+                {/* Frame Brand, Frame and Lens Material - only show for non-Contact Lens categories */}
                 {!isContactLensCategory() && (
                     <div className="form-group">
+                        <input 
+                            type="text" 
+                            placeholder="Frame Brand" 
+                            value={editingProduct ? editingProduct.frameBrand || "" : newProduct.frameBrand} 
+                            onChange={(e) => editingProduct ? setEditingProduct({ ...editingProduct, frameBrand: e.target.value }) : setNewProduct({ ...newProduct, frameBrand: e.target.value })} 
+                        />
                         <input 
                             type="text" 
                             placeholder="Frame Material" 
                             value={editingProduct ? editingProduct.frameMaterial || "" : newProduct.frameMaterial} 
                             onChange={(e) => editingProduct ? setEditingProduct({ ...editingProduct, frameMaterial: e.target.value }) : setNewProduct({ ...newProduct, frameMaterial: e.target.value })} 
                         />
-                        <input 
-                            type="text" 
-                            placeholder="Lens Material" 
-                            value={editingProduct ? editingProduct.lensMaterial || "" : newProduct.lensMaterial} 
-                            onChange={(e) => editingProduct ? setEditingProduct({ ...editingProduct, lensMaterial: e.target.value }) : setNewProduct({ ...newProduct, lensMaterial: e.target.value })} 
-                        />
                     </div>
+                )}
+
+                {/* Lens Material - only show for non-Contact Lens categories */}
+                {!isContactLensCategory() && (
+                    <input 
+                        type="text" 
+                        placeholder="Lens Material" 
+                        value={editingProduct ? editingProduct.lensMaterial || "" : newProduct.lensMaterial} 
+                        onChange={(e) => editingProduct ? setEditingProduct({ ...editingProduct, lensMaterial: e.target.value }) : setNewProduct({ ...newProduct, lensMaterial: e.target.value })} 
+                    />
                 )}
                 
                 <input 
@@ -439,36 +472,141 @@ function ManageProduct() {
                 )}
             </div>
 
-            {/* Product List */}
-            <h2 className="product-title">Existing Products</h2>
-            <div className="product-grid">
-                {products.map((product) => (
-                    <div key={product._id} className="product-card">
-                        {product.image && <img src={product.image} alt={product.name} className="product-image" />}
-                        <h3>{product.name}</h3>
-                        <p className="product-description">{product.description}</p>
-                        <div className="product-details">
-                            <p><strong>Category:</strong> {product.category}</p>
-                            {product.subCategory && <p><strong>{product.category === "Contact Lenses" ? "Brand" : "Sub-Category"}:</strong> {product.subCategory}</p>}
-                            {product.brand && <p><strong>Brand:</strong> {product.brand}</p>}
-                            {product.gender && <p><strong>Gender:</strong> {product.gender}</p>}
-                            {product.power && <p><strong>Power:</strong> {product.power}</p>}
-                            {product.color && <p><strong>Color:</strong> {product.color}</p>}
-                            <p><strong>Price: </strong>Rs. {product.price}</p>
-                            {product.discount && product.discount !== "0" && (
-                                <p><strong>Discount:</strong> {product.discount}%</p>
-                            )}
-                            <p><strong>Stock:</strong> {product.stock}</p>
-                            {product.frameMaterial && <p><strong>Frame Material:</strong> {product.frameMaterial}</p>}
-                            {product.lensMaterial && <p><strong>Lens Material:</strong> {product.lensMaterial}</p>}
-                        </div>
-                        <div className="product-actions">
-                            <button className="edit-btn" onClick={() => setEditingProduct(product)}>Edit</button>
-                            <button className="delete-btn" onClick={() => deleteProduct(product._id)}>Delete</button>
-                        </div>
-                    </div>
-                ))}
+            {/* Search Bar */}
+            <div className="search-container" style={{
+                marginBottom: '20px',
+                position: 'sticky',
+                top: '0',
+                backgroundColor: '#fff',
+                padding: '15px 0',
+                zIndex: 100,
+                borderBottom: '1px solid #e0e0e0'
+            }}>
+                <div style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    maxWidth: '600px',
+                    margin: '0 auto',
+                    position: 'relative'
+                }}>
+                    <input
+                        type="text"
+                        placeholder="Search products by name, brand, category, gender, or frame brand..."
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        style={{
+                            width: '100%',
+                            padding: '12px 45px 12px 15px',
+                            border: '2px solid #ddd',
+                            borderRadius: '25px',
+                            fontSize: '16px',
+                            outline: 'none',
+                            transition: 'border-color 0.3s ease',
+                            boxShadow: '0 2px 5px rgba(0,0,0,0.1)'
+                        }}
+                        onFocus={(e) => e.target.style.borderColor = '#007bff'}
+                        onBlur={(e) => e.target.style.borderColor = '#ddd'}
+                    />
+                    
+                    {/* Search Icon */}
+                    <span style={{
+                        position: 'absolute',
+                        right: searchTerm ? '45px' : '15px',
+                        color: '#666',
+                        fontSize: '18px',
+                        pointerEvents: 'none'
+                    }}>
+                        🔍
+                    </span>
+                    
+                    {/* Clear Button */}
+                    {searchTerm && (
+                        <button
+                            onClick={clearSearch}
+                            style={{
+                                position: 'absolute',
+                                right: '15px',
+                                background: 'none',
+                                border: 'none',
+                                fontSize: '18px',
+                                color: '#999',
+                                cursor: 'pointer',
+                                padding: '2px'
+                            }}
+                            onMouseEnter={(e) => e.target.style.color = '#ff4444'}
+                            onMouseLeave={(e) => e.target.style.color = '#999'}
+                        >
+                            ✕
+                        </button>
+                    )}
+                </div>
+                
+                {/* Search Results Info */}
+                <div style={{
+                    textAlign: 'center',
+                    marginTop: '10px',
+                    color: '#666',
+                    fontSize: '14px'
+                }}>
+                    {searchTerm ? (
+                        <span>
+                            Found {filteredProducts.length} product{filteredProducts.length !== 1 ? 's' : ''} 
+                            {searchTerm && ` for "${searchTerm}"`}
+                        </span>
+                    ) : (
+                        <span>Showing all {products.length} products</span>
+                    )}
+                </div>
             </div>
+
+            {/* Product List */}
+            <h2 className="product-title">
+                {searchTerm ? `Search Results` : 'Existing Products'}
+            </h2>
+            
+            {filteredProducts.length === 0 && searchTerm ? (
+                <div style={{
+                    textAlign: 'center',
+                    padding: '40px',
+                    color: '#666',
+                    fontSize: '18px'
+                }}>
+                    <p>No products found matching "{searchTerm}"</p>
+                    <p style={{ fontSize: '14px', marginTop: '10px' }}>
+                        Try searching with different keywords or check your spelling.
+                    </p>
+                </div>
+            ) : (
+                <div className="product-grid">
+                    {filteredProducts.map((product) => (
+                        <div key={product._id} className="product-card">
+                            {product.image && <img src={product.image} alt={product.name} className="product-image" />}
+                            <h3>{product.name}</h3>
+                            <p className="product-description">{product.description}</p>
+                            <div className="product-details">
+                                <p><strong>Category:</strong> {product.category}</p>
+                                {product.subCategory && <p><strong>{product.category === "Contact Lenses" ? "Brand" : "Sub-Category"}:</strong> {product.subCategory}</p>}
+                                {product.brand && <p><strong>Brand:</strong> {product.brand}</p>}
+                                {product.gender && <p><strong>Gender:</strong> {product.gender}</p>}
+                                {product.power && <p><strong>Power:</strong> {product.power}</p>}
+                                {product.color && <p><strong>Color:</strong> {product.color}</p>}
+                                {product.frameBrand && <p><strong>Frame Brand:</strong> {product.frameBrand}</p>}
+                                <p><strong>Price: </strong>Rs. {product.price}</p>
+                                {product.discount && product.discount !== "0" && (
+                                    <p><strong>Discount:</strong> {product.discount}%</p>
+                                )}
+                                <p><strong>Stock:</strong> {product.stock}</p>
+                                {product.frameMaterial && <p><strong>Frame Material:</strong> {product.frameMaterial}</p>}
+                                {product.lensMaterial && <p><strong>Lens Material:</strong> {product.lensMaterial}</p>}
+                            </div>
+                            <div className="product-actions">
+                                <button className="edit-btn" onClick={() => setEditingProduct(product)}>Edit</button>
+                                <button className="delete-btn" onClick={() => deleteProduct(product._id)}>Delete</button>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            )}
 
             {/* Scroll to Top Button */}
             {showScrollTop && (
