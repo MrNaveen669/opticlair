@@ -5,10 +5,9 @@ const Prescription = require('../Models/prescription.model');
 // POST /prescriptions - Submit a new prescription
 router.post('/', async (req, res) => {
   try {
-    // Log the received data for debugging
-    console.log('Received FormData:', req.body);
+    console.log('Received prescription data:', req.body);
 
-    const { name, phoneNumber, prescriptionText, inputMethod } = req.body;
+    const { name, phoneNumber, prescriptionDetails, inputMethod } = req.body;
 
     // Basic validation
     if (!name || !phoneNumber) {
@@ -22,20 +21,20 @@ router.post('/', async (req, res) => {
     // Prepare prescription data
     const prescriptionData = {
       name: name.trim(),
-      phone: phoneNumber.trim(), // We'll store it as phone in our model
+      phone: phoneNumber.trim(),
       uploadType: inputMethod || 'manual'
     };
 
-    // Handle prescription content based on input method
-    if (inputMethod === 'manual') {
-      if (!prescriptionText) {
-        return res.status(400).json({
-          success: false,
-          error: 'Prescription text is required for manual input'
-        });
-      }
-      prescriptionData.content = prescriptionText.trim();
-    } else {
+    // Handle structured prescription data
+    if (inputMethod === 'manual' && prescriptionDetails) {
+      // Store the structured prescription as JSON
+      prescriptionData.prescriptionDetails = prescriptionDetails;
+      
+      // Also create a human-readable text version for backward compatibility
+      const textContent = formatPrescriptionText(prescriptionDetails);
+      prescriptionData.content = textContent;
+      
+    } else if (inputMethod === 'file') {
       // For file uploads
       if (!req.file) {
         return res.status(400).json({
@@ -45,6 +44,11 @@ router.post('/', async (req, res) => {
       }
       prescriptionData.prescriptionFile = req.file.path;
       prescriptionData.content = 'Prescription uploaded via file';
+    } else {
+      return res.status(400).json({
+        success: false,
+        error: 'Invalid prescription data'
+      });
     }
 
     const prescription = new Prescription(prescriptionData);
@@ -58,9 +62,9 @@ router.post('/', async (req, res) => {
         name: savedPrescription.name,
         phone: savedPrescription.phone,
         content: savedPrescription.content,
-        timestamp: savedPrescription.timestamp,
-        status: savedPrescription.status,
-        notes: savedPrescription.notes
+        prescriptionDetails: savedPrescription.prescriptionDetails,
+        timestamp: savedPrescription.createdAt,
+        status: savedPrescription.status
       }
     });
 
@@ -91,25 +95,66 @@ router.post('/', async (req, res) => {
   }
 });
 
+// Helper function to format prescription details as readable text
+function formatPrescriptionText(details) {
+  const parts = [];
+  
+  if (details.rightEye) {
+    const re = details.rightEye;
+    const rightParts = [];
+    if (re.sph) rightParts.push(`SPH ${re.sph}`);
+    if (re.cyl) rightParts.push(`CYL ${re.cyl}`);
+    if (re.axis) rightParts.push(`Axis ${re.axis}°`);
+    if (re.pd) rightParts.push(`PD ${re.pd} mm`);
+    if (rightParts.length > 0) {
+      parts.push(`Right Eye (OD): ${rightParts.join(', ')}`);
+    }
+  }
+  
+  if (details.leftEye) {
+    const le = details.leftEye;
+    const leftParts = [];
+    if (le.sph) leftParts.push(`SPH ${le.sph}`);
+    if (le.cyl) leftParts.push(`CYL ${le.cyl}`);
+    if (le.axis) leftParts.push(`Axis ${le.axis}°`);
+    if (le.pd) leftParts.push(`PD ${le.pd} mm`);
+    if (leftParts.length > 0) {
+      parts.push(`Left Eye (OS): ${leftParts.join(', ')}`);
+    }
+  }
+  
+  if (details.additional) {
+    if (details.additional.addPower) {
+      parts.push(`ADD Power: ${details.additional.addPower}`);
+    }
+    if (details.additional.totalPd) {
+      parts.push(`Total PD: ${details.additional.totalPd} mm`);
+    }
+  }
+  
+  return parts.length > 0 ? parts.join('\n') : 'No prescription details provided';
+}
+
 // GET /prescriptions - Admin route to get all prescriptions
 router.get('/', async (req, res) => {
   try {
     const prescriptions = await Prescription.find()
       .sort({ createdAt: -1 })
-      .lean(); // Use lean() for better performance
+      .lean();
 
     res.json({
       success: true,
       prescriptions: prescriptions.map(p => ({
-        _id: p._id,  // Changed from id to _id for consistency
+        _id: p._id,
         name: p.name,
         phone: p.phone,
         content: p.content,
+        prescriptionDetails: p.prescriptionDetails, // Include structured data
         uploadType: p.uploadType,
         prescriptionFile: p.prescriptionFile,
         status: p.status,
         notes: p.notes,
-        createdAt: p.createdAt || p.timestamp
+        createdAt: p.createdAt
       }))
     });
   } catch (error) {
@@ -146,7 +191,7 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-// Routes to handle prescription status updates
+// PATCH /prescriptions/:id/status - Update prescription status
 router.patch('/:id/status', async (req, res) => {
   try {
     const { id } = req.params;
