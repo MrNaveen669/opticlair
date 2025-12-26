@@ -88,7 +88,7 @@ export const NavbarCard2 = () => {
       <HStack m="auto">
         <Box w="20%" display="flex" justifyContent="center">
           <Link to="/">
-            <Image src={LogoImage} alt="logo" w={["80px", "100px", "120px"]} />
+            <Image src="https://res.cloudinary.com/dl28vjim6/image/upload/v1766474202/file_0000000017e471fa85fc2c643a8713dd_kizscj.png" alt="logo" w={["80px", "100px", "120px"]} />
           </Link>
         </Box>
         <HStack w="85%" m="auto">
