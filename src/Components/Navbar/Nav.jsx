@@ -105,7 +105,7 @@ function Nav() {
       <HStack m="auto" justifyContent="space-between">
         <Box w={{ lg: "20%", md: "20%", sm: "22%", base: "30%" }}>
           <Link to="/">
-            <Image src={LogoImage} alt="logo" w={{ lg: "75%", md: "100%", sm: "100%", base: "100%" }} />
+            <Image src="https://res.cloudinary.com/dl28vjim6/image/upload/v1766474202/file_0000000017e471fa85fc2c643a8713dd_kizscj.png" alt="logo" w={{ lg: "75%", md: "100%", sm: "100%", base: "100%" }} />
           </Link>
         </Box>
         <Box w="70%" display={{ sm: "inherit", base: "none" }} position="relative">
