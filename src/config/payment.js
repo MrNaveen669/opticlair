@@ -24,7 +24,7 @@ const getKeyId = () => {
         // Merchant details
         MERCHANT_NAME: "OptiClair",
         DESCRIPTION: "Payment for your order",
-        LOGO_URL: "https://res.cloudinary.com/dl28vjim6/image/upload/v1749189924/logo5_jrw50m.png", // Replace with your actual logo URL
+        LOGO_URL: "https://res.cloudinary.com/dl28vjim6/image/upload/v1767427530/chasmaghar_logo_l3cekq.jpg", // Replace with your actual logo URL
         
         // Default prefill information - can be overridden with user data
         PREFILL: {
