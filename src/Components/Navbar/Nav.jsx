@@ -103,7 +103,7 @@ function Nav() {
       p={2.5}
     >
       <HStack m="auto" justifyContent="space-between">
-        <Box w={{ lg: "20%", md: "20%", sm: "22%", base: "30%" }}>
+        <Box w={{ lg: "20%", md: "20%", sm: "22%", base: "50%" }}>
           <Link to="/">
             <Image src="https://res.cloudinary.com/dl28vjim6/image/upload/v1767436249/chasmaghar_logo_l3cekq_c_crop_w_750_h_1000_pqzeqc.jpg" alt="logo" w={{ lg: "75%", md: "100%", sm: "100%", base: "100%" }} />
           </Link>
